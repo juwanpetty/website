@@ -3,8 +3,11 @@ import React from "react";
 import localFont from "@next/font/local";
 import type { AppProps } from "next/app";
 
-import Layout from "@/components/Layout";
+import { ApolloProvider } from "@apollo/client";
+import client from "@lib/hygraph/client";
 import classNames from "classnames";
+
+import Layout from "@components/Layout";
 
 import "../styles/globals.scss";
 
@@ -62,11 +65,13 @@ const grotesk = localFont({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div className={classNames("font-sans", grotesk.variable)}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </div>
+    <ApolloProvider client={client}>
+      <div className={classNames("font-sans", grotesk.variable)}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </div>
+    </ApolloProvider>
   );
 }
 
